@@ -1,0 +1,22 @@
+[dotenv@17.3.1] injecting env (11) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+Conectando a MongoDB Atlas...
+✅ Conexión exitosa. Limpiando colecciones base...
+🌱 Insertando nuevos datos masivos...
+❌ Error en Seed Masivo: ValidationError: Comparendo validation failed: estado: `acuerdo_pago` is not a valid enum value for path `estado`.
+    at model.validate (C:\Users\sebas\OneDrive\Desktop\Proyecto_Transito\backend\node_modules\mongoose\lib\document.js:2864:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  errors: {
+    estado: ValidatorError: `acuerdo_pago` is not a valid enum value for path `estado`.
+        at SchemaString.doValidate (C:\Users\sebas\OneDrive\Desktop\Proyecto_Transito\backend\node_modules\mongoose\lib\schemaType.js:1432:13)
+        at model.validate (C:\Users\sebas\OneDrive\Desktop\Proyecto_Transito\backend\node_modules\mongoose\lib\document.js:2842:20)
+        at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+      properties: [Object],
+      kind: 'enum',
+      path: 'estado',
+      value: 'acuerdo_pago',
+      reason: undefined,
+      [Symbol(mongoose#validatorError)]: true
+    }
+  },
+  _message: 'Comparendo validation failed'
+}

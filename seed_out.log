@@ -1,0 +1,10 @@
+[dotenv@17.3.1] injecting env (11) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+Conectando a MongoDB Atlas...
+✅ Conexión exitosa. Limpiando colecciones base...
+🌱 Insertando nuevos datos...
+✅ Base de datos Atlas poblada con éxito.
+---------------------------------------------
+Credenciales de prueba generadas:
+Usuario Común -> Cédula: 111222333 | Clave: password123
+Administrador -> Cédula: admin | Clave: admin123
+Comparendo para Pruebas Chatbot: CNT-2025-0001
