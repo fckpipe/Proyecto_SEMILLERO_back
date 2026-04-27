@@ -18,8 +18,11 @@ const multasRoutes      = require('./src/routes/multas.routes');
 
 const app = express();
 
-// ── DB Connection (auto-seed is triggered inside connectDB) ──────────────────
-connectDB();
+// ── Ensure DB connection on every request ──────────────────────────────────────
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // ── CORS ───────────────────────────────────────────────────────────────────────
 const allowedOrigins = [
@@ -29,7 +32,6 @@ const allowedOrigins = [
 ];
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, Postman, curl)
     if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     callback(new Error(`CORS: ${origin} not allowed`));
   },
@@ -54,7 +56,8 @@ app.use('/api/pqr',         pqrRoutes);
 app.use('/api/multas',      multasRoutes);
 
 // ── Health check ───────────────────────────────────────────────────────────────
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+  await connectDB();
   res.json({
     message: 'API Secretaría de Movilidad de Cali — v2.0',
     status: 'running',
@@ -69,14 +72,9 @@ app.use((req, res) => {
 });
 
 // ── Global Error Handler ───────────────────────────────────────────────────────
-// Must have 4 params for Express to recognize it as error middleware
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(`[Error] ${req.method} ${req.path}:`, err.message);
-  
-  // Don't expose stack traces in production
   const isDev = process.env.NODE_ENV !== 'production';
-  
   res.status(err.status || 500).json({
     status: 'error',
     message: err.message || 'Error interno del servidor.',
@@ -90,7 +88,6 @@ process.on('unhandledRejection', (reason) => {
 });
 process.on('uncaughtException', (err) => {
   console.error('💥 Uncaught Exception:', err.message);
-  // Don't exit the process — keep the server alive
 });
 
 const PORT = process.env.PORT || 3001;
